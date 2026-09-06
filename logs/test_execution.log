@@ -1,0 +1,26 @@
+2026-09-06 10:04:43 | INFO | Launching Chromium browser
+2026-09-06 10:04:44 | INFO | Creating new browser context
+2026-09-06 10:04:44 | INFO | Opening Boozt: https://www.boozt.com
+2026-09-06 10:04:49 | INFO | Cookie banner accepted
+2026-09-06 10:04:49 | INFO | Website is already in English
+2026-09-06 10:04:49 | INFO | Boozt setup completed
+2026-09-06 10:04:49 | INFO | Starting add-to-cart test
+2026-09-06 10:04:49 | INFO | Opening search
+2026-09-06 10:04:54 | INFO | Search input is visible
+2026-09-06 10:04:56 | INFO | Searched for Nike shoes
+2026-09-06 10:04:57 | INFO | Selected Women tab
+2026-09-06 10:04:57 | INFO | Search results are visible
+2026-09-06 10:04:57 | INFO | Selected product: W NIKE AL8
+2026-09-06 10:04:58 | INFO | Opened product detail page
+2026-09-06 10:05:03 | INFO | Add to cart button is visible and enabled
+2026-09-06 10:05:04 | INFO | Clicked Add to cart
+2026-09-06 10:05:04 | INFO | Size picker modal opened
+2026-09-06 10:05:04 | INFO | Selected size: 35.5
+2026-09-06 10:05:05 | INFO | Product added to cart: W NIKE AL8 | Size: 35.5
+2026-09-06 10:05:07 | INFO | Opened cart
+2026-09-06 10:05:09 | INFO | Verified product in cart: W NIKE AL8
+2026-09-06 10:05:09 | INFO | Verified size in cart: 35.5
+2026-09-06 10:05:09 | INFO | Add-to-cart test completed successfully
+2026-09-06 10:05:09 | INFO | TEST PASSED | tests/test_add_product_to_cart.py::test_add_product_to_cart
+2026-09-06 10:05:09 | INFO | Closing browser context
+2026-09-06 10:05:09 | INFO | Closing Chromium browser
