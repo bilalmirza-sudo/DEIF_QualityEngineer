@@ -1,8 +1,7 @@
 import pytest
 from playwright.sync_api import Browser, expect, sync_playwright
 from utils.logger import logger
-
-
+import time
 BASE_URL = "https://www.boozt.com"
 
 
@@ -20,8 +19,8 @@ def browser():
         browser.close()
 
 
-@pytest.fixture(scope="function")
-def page(browser: Browser):
+@pytest.fixture(scope="session")
+def page(browser):
    
     logger.info("Creating new browser context")
 
@@ -44,6 +43,7 @@ def page(browser: Browser):
         except Exception:
             logger.info("Cookie banner was not displayed")
 
+        time.sleep(2)
         # Language selectors
         english_selector = page.get_by_role("button", name="EN, Choose your language", exact=True)
         german_selector = page.get_by_role("button", name="DE, Wählen Sie Ihre Sprache", exact=True)

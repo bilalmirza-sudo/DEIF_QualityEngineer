@@ -1,11 +1,10 @@
 import re
 import time
-
 from playwright.sync_api import Page, expect
 from utils.logger import logger
 
 
-def test_filter_brand(page: Page):
+def test_filter_brand(page):
 
     logger.info("Starting brand filter test")
 

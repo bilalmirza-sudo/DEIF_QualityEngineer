@@ -9,16 +9,20 @@ def test_add_product_to_cart(page: Page):
 
     # Search for Nike shoes
     logger.info("Opening search")
-    time.sleep(5)
-    
-    search_button = page.get_by_role("button", name="Search", exact=True)
-    expect(search_button).to_be_visible(timeout=10000)
-    search_button.click()
+
+    # Short stabilization wait for Boozt's client-side content
+    time.sleep(3)
+
+    page.get_by_role("button", name="Search").click()
 
     search_input = page.locator("#desktopSearch").get_by_placeholder("Search products or brands")
-    expect(search_input).to_be_visible(timeout=10000)
 
-    logger.info("Search input is visible")
+    try:
+        expect(search_input).to_be_visible(timeout=10000)
+        logger.info("Search input is visible")
+    except AssertionError:
+        logger.error("Search input did not become visible")
+        raise
 
     search_input.fill("nike shoes")
     search_input.press("Enter")
@@ -48,13 +52,13 @@ def test_add_product_to_cart(page: Page):
         logger.error("Product name could not be retrieved")
         raise AssertionError("Product name not found")
 
-    logger.info(f"Selected product: {product_name}")
+    logger.info("Selected product: %s", product_name)
 
     # Open product
     product.locator("a").first.click()
     logger.info("Opened product detail page")
 
-    # wait here as the page content takes some time to load
+    # Wait for dynamic PDP content
     time.sleep(5)
 
     # Locate Add to cart button
@@ -83,20 +87,20 @@ def test_add_product_to_cart(page: Page):
         logger.error("Size picker modal did not open for product: %s", product_name)
         raise
 
-    # Get all size buttons inside modal
-    size_buttons = size_modal.locator("button.size-picker-size")
-
-    try:
-        expect(size_buttons.first).to_be_visible()
-    except AssertionError:
-        logger.error("No size options were displayed for product: %s", product_name)
-        raise
+    # Get only sizes that are NOT out of stock
+    available_sizes = size_modal.locator("button.size-picker-size:not(.size-picker-size--is-oos)")
 
     selected_size = None
 
+    try:
+        expect(available_sizes.first).to_be_visible()
+    except AssertionError:
+        logger.error("No available sizes were displayed for product: %s", product_name)
+        raise
+
     # Select first available size
-    for i in range(size_buttons.count()):
-        size_button = size_buttons.nth(i)
+    for i in range(available_sizes.count()):
+        size_button = available_sizes.nth(i)
 
         if size_button.is_visible() and size_button.is_enabled():
             selected_size = size_button.inner_text().strip()
@@ -104,14 +108,14 @@ def test_add_product_to_cart(page: Page):
             break
 
     if selected_size is None:
-        logger.error("No available size found for product: %s", product_name)
+        logger.error("No available size could be selected for product: %s", product_name)
         raise AssertionError("No available size found")
 
-    logger.info("Selected size: %s", selected_size)
+    logger.info("Selected available size: %s", selected_size)
 
     time.sleep(1)
 
-    # Add to cart
+    # Confirm Add to cart
     page.get_by_label("Add to cart").click()
 
     logger.info(
@@ -136,13 +140,13 @@ def test_add_product_to_cart(page: Page):
         logger.error("Product verification failed. Product not found in cart: %s", product_name)
         raise
 
-    # Verify size
+    # Verify selected size
     try:
         expect(page.get_by_text(selected_size, exact=True).first).to_be_visible()
         logger.info("Verified size in cart: %s", selected_size)
     except AssertionError:
         logger.error(
-            "Size verification failed. Expected size %s was not found in cart for product: %s",
+            "Size verification failed. Expected size %s was not found for product: %s",
             selected_size,
             product_name
         )
