@@ -2,7 +2,7 @@ import pytest
 from playwright.sync_api import Browser, expect, sync_playwright
 from utils.logger import logger
 import time
-BASE_URL = "https://www.boozt.com"
+BASE_URL = "https://www.boozt.com/en"
 
 
 @pytest.fixture(scope="session")
