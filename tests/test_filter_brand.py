@@ -1,11 +1,10 @@
-from playwright.sync_api import Page, expect
-
+from playwright.sync_api import page, expect
 from pages.home_page import HomePage
 from utils.logger import logger
 import re
 
 
-def test_filter_brand(page: Page):
+def test_filter_brand(page):
 
     logger.info("Starting brand filter test")
 
@@ -45,7 +44,7 @@ def test_filter_brand(page: Page):
 
     except AssertionError:
         logger.error(
-            "Expected Adidas URL but current URL is: %s",
+            "Expected Adidas URL but current url is: %s",
             page.url
         )
         raise
