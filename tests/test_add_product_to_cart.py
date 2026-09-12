@@ -1,11 +1,11 @@
-from playwright.sync_api import page, expect
+from playwright.sync_api import Page, expect
 from pages.home_page import HomePage
 from pages.product_page import ProductPage
 from pages.cart_page import CartPage
 from utils.logger import logger
 
 
-def test_add_product_to_cart(page):
+def test_add_product_to_cart(page: Page):
 
     logger.info("Starting add-to-cart test")
 

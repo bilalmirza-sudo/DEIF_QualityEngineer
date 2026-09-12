@@ -1,10 +1,10 @@
-from playwright.sync_api import page, expect
+from playwright.sync_api import Page, expect
 from pages.home_page import HomePage
 from utils.logger import logger
 import re
 
 
-def test_filter_brand(page):
+def test_filter_brand(page: Page):
 
     logger.info("Starting brand filter test")
 

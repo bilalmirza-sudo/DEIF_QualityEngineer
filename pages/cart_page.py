@@ -1,11 +1,11 @@
 import time
-from playwright.sync_api import page
+from playwright.sync_api import Page
 from utils.logger import logger
 
 
 class CartPage:
 
-    def __init__(self, page):
+    def __init__(self, page: Page):
         self.page = page
 
     def open_cart(self):
